@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>接口测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/Chart.js/0.2.0/Chart.min.js"></script>
+    <!-- <link href="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js" rel="stylesheet">   -->
+    
+    
+<style type="text/css" media="screen">
+body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
+table       { font-size: 100%; }
+pre         {  }
+
+/* -- heading ---------------------------------------------------------------------- */
+h1 {
+	font-size: 16pt;
+	color: gray;
+}
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+	margin-left: 10px;
+}
+
+.heading .attribute {
+    margin-top: 1ex;
+    margin-bottom: 0;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- css div popup ------------------------------------------------------------------------ */
+a.popup_link {
+}
+
+a.popup_link:hover {
+    color: red;
+}
+
+.popup_window {
+    display: none;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    /*border: solid #627173 1px; */
+    font-family: "Lucida Console", "Courier New", Courier, monospace;
+    text-align: left;
+    font-size: 8pt;
+    width: 500px;
+}
+
+}
+/* -- report ------------------------------------------------------------------------ */
+#show_detail_line {
+    margin-top: 3ex;
+    margin-bottom: 1ex;
+    margin-left: 10px;
+}
+#result_table {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid #777;
+    margin-left: 10px;
+}
+#header_row {
+    font-weight: bold;
+    color: #606060;
+    background-color: #f5f5f5;
+    border-top-width: 10px;
+    border-color: #d6e9c6;
+	font-size: 12px;
+}
+#result_table td {
+    border: 1px solid #f5f5f5;
+    padding: 2px;
+
+}
+#total_row  { font-weight: bold; }
+.passClass  { background-color: #d6e9c6; }
+.failClass  { background-color: #faebcc; }
+.errorClass { background-color: #ebccd1; }
+.passCase   { color: #6c6; }
+.failCase   { color: #c60; font-weight: bold; }
+.errorCase  { color: #c00; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+
+
+/* -- ending ---------------------------------------------------------------------- */
+#ending {
+}
+
+/* -- chars ---------------------------------------------------------------------- */
+.testChars {margin-left: 150px;}
+
+.btn-info1 {
+    color: #fff;
+    background-color: #d6e9c6;
+    border-color: #d6e9c6;
+}
+
+.btn-info2 {
+    color: #fff;
+    background-color: #faebcc;
+    border-color: #faebcc;
+}
+
+.btn-info3 {
+    color: #fff;
+    background-color: #ebccd1;
+    border-color: #ebccd1;
+}
+</style>
+
+</head>
+<body>
+<script language="javascript" type="text/javascript"><!--
+output_list = Array();
+
+/* level - 0:Summary; 1:Failed; 2:All */
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level < 1) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level > 1) {
+                tr.className = '';
+            }
+            else {
+                tr.className = 'hiddenRow';
+            }
+        }
+    }
+}
+
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        tid0 = 't' + cid.substr(1) + '.' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        if (toHide) {
+            document.getElementById('div_'+tid).style.display = 'none'
+            document.getElementById(tid).className = 'hiddenRow';
+        }
+        else {
+            document.getElementById(tid).className = '';
+        }
+    }
+}
+
+
+function showTestDetail(div_id){
+    var details_div = document.getElementById(div_id)
+    var displayState = details_div.style.display
+    // alert(displayState)
+    if (displayState != 'block' ) {
+        displayState = 'block'
+        details_div.style.display = 'block'
+    }
+    else {
+        details_div.style.display = 'none'
+    }
+}
+
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+
+/* obsoleted by detail in <div>
+function showOutput(id, name) {
+    var w = window.open("", //url
+                    name,
+                    "resizable,scrollbars,status,width=800,height=450");
+    d = w.document;
+    d.write("<pre>");
+    d.write(html_escape(output_list[id]));
+    d.write("\n");
+    d.write("<a href='javascript:window.close()'>close</a>\n");
+    d.write("</pre>\n");
+    d.close();
+}
+*/
+--></script>
+
+<div class='heading'>
+<h1>接口测试报告</h1>
+<p class='attribute'><strong>Start Time:</strong> 2018-08-24 20:26:19</p>
+<p class='attribute'><strong>Duration:</strong> 0:00:06.388000</p>
+<p class='attribute'><strong>Status:</strong> Pass 5</p>
+
+<p class='description'>测试用例执行情况：</p>
+</div>
+
+<div style="float:left; margin-left: 10px;">
+	<p> Test Case Pie charts </p>
+	<a class="btn btn-xs btn-info1">-Pass-</a><br>
+	<a class="btn btn-xs btn-info2">-Faild-</a><br>
+	<a class="btn btn-xs btn-info3">-Error-</a><br>
+</div>
+
+<div class="testChars">
+	<canvas id="myChart" width="250" height="250"></canvas>
+</div>
+
+
+
+<p id='show_detail_line' style="margin-left: 10px;">Show
+<a href='javascript:showCase(0)' class="btn btn-xs btn-primary">Summary</a>
+<a href='javascript:showCase(1)' class="btn btn-xs btn-danger">Failed</a>
+<a href='javascript:showCase(2)' class="btn btn-xs btn-info">All</a>
+</p>
+<table id='result_table'>
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="panel-title">
+    <td>Test Group/Test case</td>
+    <td>Count</td>
+    <td>Pass</td>
+    <td>Fail</td>
+    <td>Error</td>
+    <td>View</td>
+</tr>
+
+<tr class='passClass'>
+    <td>main.MyTestCase</td>
+    <td>5</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c1',5)">Detail</a></td>
+</tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_customer</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        pass</a>
+
+    <div id='div_pt1.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.1: 客户Add状态码： 200
+客户添加成功，客户名称： 接口测试2018-08-24-20:26:19
+获取第一页客户数 15 ，名称：
+ ['接口测试2018-08-24-20:26:19', '接口测试2018-08-24-15:26:10', '接口测试2018-08-24-15:17:52', '接口测试2018-08-24-15:15:53', '接口测试2018-08-24-15:13:07', '接口测试2018-08-24-14:45:38', '接口测试2018-08-24-14:43:28', '接口测试2018-08-24-14:38:50', '接口测试2018-08-24-14:37:57', '接口测试2018-08-24-14:37:21', '接口测试2018-08-24-14:31:46', '接口测试2018-08-24-14:26:10', '接口测试2018-08-24-14:25:29', '接口测试2018-08-24-14:24:47', '接口测试2018-08-24-14:17:03'] 
+总数： 66
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_supplier</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
+        pass</a>
+
+    <div id='div_pt1.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.2: 供应商Add状态码： 200
+供应商添加成功，供应商名称： 接口测试2018-08-24-20:26:20
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_newproduct</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.3')" >
+        pass</a>
+
+    <div id='div_pt1.3' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.3').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.3: 新增产品： {"status":{"code":200,"message":"OK"},"product":{"id":3254278,"default_product_attr_group":{"id":3693678}}}
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_othersinto</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.4')" >
+        pass</a>
+
+    <div id='div_pt1.4' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.4').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.4: 其他入库单创建成功，id： 559603
+单据详情： {'status': {'code': 200, 'message': 'OK'}, 'storageio': {'id': 559603, 'category': 'in', 'category_i18n': '其他入库', 'creator_id': 1610270, 'creator_name': '工作号', 'check_id': None, 'check_number': None, 'status': 'approving', 'status_i18n': '待审批', 'type_name': '其他入库单', 'attachments_count': 1, 'approved_level': 0, 'number': 'QTRKD20180824202622', 'total_quantity': '6.0', 'total_base_quantity': None, 'total_amount': '36.0', 'companyable_id': 1465906, 'companyable_type': 'Customer', 'copy_to': [], 'copy_to_member_names': [], 'note': '其他入库单接口自动化测试', 'has_approve_permission': True, 'has_revoke_permission': True, 'sensitive_access': True, 'allow_negative_inventory': False, 'warehouse_name': '上海仓库', 'type': 'in', 'type_i18n': '其他入库', 'storaged_at': '2018-08-24', 'created_at': '2018-08-24', 'companyable_name': 'KH0001', 'has_serial_code': False, 'document_addition_id': 2414452, 'product_items': [{'id': 18208685, 'product_id': 3254204, 'product_attr_group_id': 3693590, 'product_unit_id': 3505751, 'warehouse_id': 46311, 'warehouse_name': '上海仓库', 'name': '五月花', 'product_number': 'CP0001', 'spec': '规格', 'attr_names': '', 'unit': '包', 'quantity': '2.0', 'price': '5.0', 'price_with_tax': '5.0', 'discount': '0.0', 'deduction': '0.0', 'amount': '10.0', 'tax_rate': '0.0', 'tax_amount': '0.0', 'amount_with_tax': '10.0', 'batch_id': None, 'batch_number': None, 'modified': 'quantity', 'note': '产品备注', 'base_unit': '', 'base_quantity': None, 'deputy_unit_quantity': '', 'serial_code_status': 'serial_closed', 'expired_at': None, 'produced_at': None, 'product_image': 'https://obbsip92b.qnssl.com/FmzjkW3DieyLz6dzs7byB0R9lDr0?&amp;e=1534778403&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:8GIYW4aN1ZxPneVG5Qx5ccwxzPU=&amp;imageView2/0/w/200/h/200', 'product_images': [{'id': 214508, 'name': 'lAHPBY0V40IDOmfM28zb_219_219.gif', 'url': 'https://obbsip92b.qnssl.com/FmzjkW3DieyLz6dzs7byB0R9lDr0?&amp;e=1534778403&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:8GIYW4aN1ZxPneVG5Qx5ccwxzPU=', 'key': None}], 'serial_codes_attributes': []}, {'id': 18208686, 'product_id': 3254209, 'product_attr_group_id': 3693598, 'product_unit_id': 3505756, 'warehouse_id': 46311, 'warehouse_name': '上海仓库', 'name': 'iPhone8', 'product_number': 'CP0004', 'spec': 'iPhone的规格', 'attr_names': '深空灰/64G', 'unit': '部', 'quantity': '2.0', 'price': '6.0', 'price_with_tax': '6.0', 'discount': '0.0', 'deduction': '0.0', 'amount': '12.0', 'tax_rate': '0.0', 'tax_amount': '0.0', 'amount_with_tax': '12.0', 'batch_id': None, 'batch_number': None, 'modified': 'price', 'note': 'iPhone的备注1', 'base_unit': '', 'base_quantity': None, 'deputy_unit_quantity': '', 'serial_code_status': 'serial_closed', 'expired_at': None, 'produced_at': None, 'product_image': 'https://obbsip92b.qnssl.com/FucsDun_tumBUfcQbTY6gHlgxvia?&amp;e=1534779303&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:Kw0Pz0I7rVgzqsQLwotrsFTHRrs=&amp;imageView2/0/w/200/h/200', 'product_images': [{'id': 214511, 'name': 'u=2572528570,3179480776&amp;fm=58&amp;w=121&amp;h=140&amp;img.JPEG', 'url': 'https://obbsip92b.qnssl.com/FucsDun_tumBUfcQbTY6gHlgxvia?&amp;e=1534779303&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:Kw0Pz0I7rVgzqsQLwotrsFTHRrs=', 'key': None}], 'serial_codes_attributes': []}, {'id': 18208687, 'product_id': 3254209, 'product_attr_group_id': 3693599, 'product_unit_id': 3505756, 'warehouse_id': 46311, 'warehouse_name': '上海仓库', 'name': 'iPhone8', 'product_number': 'CP0004', 'spec': 'iPhone的规格', 'attr_names': '玫瑰红/256G', 'unit': '部', 'quantity': '2.0', 'price': '7.0', 'price_with_tax': '7.0', 'discount': '0.0', 'deduction': '0.0', 'amount': '14.0', 'tax_rate': '0.0', 'tax_amount': '0.0', 'amount_with_tax': '14.0', 'batch_id': None, 'batch_number': None, 'modified': 'price', 'note': 'iPhone的备注2', 'base_unit': '', 'base_quantity': None, 'deputy_unit_quantity': '', 'serial_code_status': 'serial_closed', 'expired_at': None, 'produced_at': None, 'product_image': 'https://obbsip92b.qnssl.com/FucsDun_tumBUfcQbTY6gHlgxvia?&amp;e=1534779303&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:Kw0Pz0I7rVgzqsQLwotrsFTHRrs=&amp;imageView2/0/w/200/h/200', 'product_images': [{'id': 214511, 'name': 'u=2572528570,3179480776&amp;fm=58&amp;w=121&amp;h=140&amp;img.JPEG', 'url': 'https://obbsip92b.qnssl.com/FucsDun_tumBUfcQbTY6gHlgxvia?&amp;e=1534779303&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:Kw0Pz0I7rVgzqsQLwotrsFTHRrs=', 'key': None}], 'serial_codes_attributes': []}], 'attachments': [{'id': 726276, 'filename': 'lAHPBY0V40IDOmfM28zb_219_219.gif', 'file_url': 'https://obbsip92b.qnssl.com/FmzjkW3DieyLz6dzs7byB0R9lDr0?&amp;e=1534999596&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:yHHHwsz3uglkXtwOSAOcrbSF6k8=&amp;imageView2/0/w/200/h/200', 'url': 'https://obbsip92b.qnssl.com/FmzjkW3DieyLz6dzs7byB0R9lDr0?&amp;e=1534999596&amp;token=w2yRBQw0CPY-fsy6hxBjASopjHCTtT7RKFRtQeJz:yHHHwsz3uglkXtwOSAOcrbSF6k8=', 'created_at': '2018-08-24 20:26', 'is_image': True}]}}
+1级审批通过： {'status': {'code': 200, 'message': 'OK'}, 'storageio': {'id': 559603, 'approved_level': 1, 'status': 'approving', 'status_i18n': '待2级审批'}}
+2级审批通过： {'status': {'code': 200, 'message': 'OK'}, 'storageio': {'id': 559603, 'approved_level': 2, 'status': 'approving', 'status_i18n': '待3级审批'}}
+3级审批通过： {'status': {'code': 200, 'message': 'OK'}, 'storageio': {'id': 559603, 'approved_level': 3, 'status': 'passed', 'status_i18n': '审批通过'}}
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_warehouses</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
+        pass</a>
+
+    <div id='div_pt1.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+pt1.5: 新增仓库成功，名称： 接口测试仓20:26:24 id： 46333
+启用成功,仓库name： 接口测试仓20:26:24
+第一页仓库数： 15 ，
+名称： ['接口测试仓20:26:24', '接口测试仓20:18:14', '接口测试仓20:15:59', '接口测试仓19:51:38', '接口测试仓19:51:27', '接口测试仓19:30:16', '接口测试仓19:29:01', '接口测试仓19:28:40', '接口测试仓19:11:52', '接口测试仓19:01:40', '接口测试仓18:47:23', '接口测试仓18:46:19', '湖南仓库', '上海仓库', '接口测试仓19:33:04'] 
+总仓数： 19
+contacters接口返回成功： ['谢芝林', '邓明杰', '陈雨佳', '陆丹丹', '于子洵', '曹家铭', '工作号', '李文英', '小鹏', 'leason']
+assistors接口返回成功： ['谢芝林', '邓明杰', '陈雨佳', '陆丹丹', '于子洵', '曹家铭', '工作号', '李文英', '小鹏', 'leason']
+viewable_members接口返回成功： ['谢芝林', '邓明杰', '陈雨佳', '陆丹丹', '于子洵', '曹家铭', '工作号', '李文英', '小鹏', 'leason']
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='total_row'>
+    <td>Total</td>
+    <td>5</td>
+    <td class="text text-success">5</td>
+    <td class="text text-danger">0</td>
+    <td class="text text-warning">0</td>
+    <td>&nbsp;</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+
+    <script type="text/javascript">
+var data = [
+	{
+		value: 0,
+		color: "#ebccd1",
+		label: "Error",
+		labelColor: 'white',
+		labelFontSize: '16'
+	},
+	{
+		value : 0,
+		color : "#faebcc",
+		label: "Fail",
+		labelColor: 'white',
+		labelFontSize: '16'
+	},
+	{
+		value : 5,
+		color : "#d6e9c6",
+		label : "Pass",
+		labelColor: 'white',
+		labelFontSize: '16'
+	}			
+]
+
+var newopts = {
+     animationSteps: 100,
+ 		animationEasing: 'easeInOutQuart',
+}
+
+//Get the context of the canvas element we want to select
+var ctx = document.getElementById("myChart").getContext("2d");
+
+var myNewChart = new Chart(ctx).Pie(data,newopts);
+
+</script>
+	
+</body>
+</html>
